@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/acostalima/react-native-polyfill-globals/compare/v1.0.3...v1.0.4) (2020-10-22)
+
+
+### Bug Fixes
+
+* switch to named exports ([14586da](https://github.com/acostalima/react-native-polyfill-globals/commit/14586daa460ccbee42d777323bcfb3410d232aca))
+
 ### [1.0.3](https://github.com/acostalima/react-native-polyfill-globals/compare/v1.0.2...v1.0.3) (2020-10-22)
 
 
