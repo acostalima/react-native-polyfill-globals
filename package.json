@@ -1,6 +1,6 @@
 {
   "name": "react-native-polyfill-globals",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Polyfills and patches missing or partially missing web and core APIs",
   "main": "index.js",
   "repository": "acostalima/react-native-polyfill-globals",
