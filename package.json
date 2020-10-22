@@ -2,7 +2,7 @@
   "name": "react-native-polyfill-globals",
   "version": "1.0.2",
   "description": "Polyfills and patches missing or partially missing web and core APIs",
-  "main": "src/index.js",
+  "main": "index.js",
   "repository": "acostalima/react-native-polyfill-globals",
   "author": {
     "name": "André Costa Lima",
@@ -13,6 +13,7 @@
   "files": [
     "src",
     "index.js",
+    "auto.js",
     "patches"
   ],
   "keywords": [
@@ -36,6 +37,7 @@
     "@moxy/eslint-config-react-native": "^13.0.3",
     "@moxy/jest-config-base": "^5.0.0",
     "@moxy/jest-config-react-native": "^5.0.0",
+    "conventional-github-releaser": "^3.1.5",
     "eslint": "^6.8.0",
     "husky": "^4.3.0",
     "jest": "^26.6.0",
@@ -48,10 +50,11 @@
   },
   "dependencies": {
     "base-64": "^1.0.0",
-    "big-integer": "^1.6.48",
-    "formdata-polyfill": "^3.0.20",
     "react-native-url-polyfill": "^1.2.0",
     "text-encoding": "^0.7.0",
     "web-streams-polyfill": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react-native": "*"
   }
 }
