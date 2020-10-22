@@ -1,8 +1,8 @@
 diff --git a/node_modules/whatwg-fetch/dist/fetch.umd.js b/node_modules/whatwg-fetch/dist/fetch.umd.js
-index 6c7b313..ce62e84 100644
+index 6c7b313..1c6758d 100644
 --- a/node_modules/whatwg-fetch/dist/fetch.umd.js
 +++ b/node_modules/whatwg-fetch/dist/fetch.umd.js
-@@ -1,612 +1,705 @@
+@@ -1,612 +1,712 @@
  (function (global, factory) {
 -  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 -  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -511,7 +511,7 @@ index 6c7b313..ce62e84 100644
 +      };
 +
 +      if (support.blob) {
-+        this.blob = function() {
++        this.blob = async function() {
 +          var rejected = consumed(this);
 +          if (rejected) {
 +            return rejected
@@ -1026,41 +1026,38 @@ index 6c7b313..ce62e84 100644
 -    exports.DOMException.prototype = Object.create(Error.prototype);
 -    exports.DOMException.prototype.constructor = exports.DOMException;
 -  }
+ 
+-  function fetch(input, init) {
+-    return new Promise(function(resolve, reject) {
+-      var request = new Request(input, init);
 +        xhr.onload = function() {
 +          async function enqueueSingleChunk() {
 +            if (xhr.responseType === 'blob') {
 +              const bytes = await readBlobAsArrayBuffer(xhr.response);
  
--  function fetch(input, init) {
--    return new Promise(function(resolve, reject) {
--      var request = new Request(input, init);
-+              readableStreamController.enqueue(bytes);
-+            }
- 
 -      if (request.signal && request.signal.aborted) {
 -        return reject(new exports.DOMException('Aborted', 'AbortError'))
 -      }
-+            if (xhr.responseType === 'arraybuffer') {
-+              readableStreamController.enqueue(xhr.response);
++              readableStreamController.enqueue(bytes);
 +            }
  
 -      var xhr = new XMLHttpRequest();
-+            readableStreamController.close();
-+          }
++            if (xhr.responseType === 'arraybuffer') {
++              readableStreamController.enqueue(new Uint8Array(xhr.response));
++            }
  
 -      function abortXhr() {
 -        xhr.abort();
 -      }
-+          enqueueSingleChunk();
-+        };
++            readableStreamController.close();
++          }
  
 -      xhr.onload = function() {
 -        var options = {
 -          status: xhr.status,
 -          statusText: xhr.statusText,
 -          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
-+        xhr.onerror = function() {
-+            reject(new TypeError('Network request failed'));
++          enqueueSingleChunk();
          };
 -        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
 -        var body = 'response' in xhr ? xhr.response : xhr.responseText;
@@ -1074,8 +1071,10 @@ index 6c7b313..ce62e84 100644
 -          reject(new TypeError('Network request failed'));
 -        }, 0);
 -      };
-+        xhr.ontimeout = function() {
++        xhr.onerror = function() {
++          setTimeout(function() {
 +            reject(new TypeError('Network request failed'));
++          }, 0);
 +        };
  
 -      xhr.ontimeout = function() {
@@ -1083,49 +1082,40 @@ index 6c7b313..ce62e84 100644
 -          reject(new TypeError('Network request failed'));
 -        }, 0);
 -      };
-+        xhr.onprogress = function() {
-+          if (canceled || xhr.responseType !== 'text') {
-+            return;
-+          };
++        xhr.ontimeout = function() {
++          setTimeout(function() {
++            reject(new TypeError('Network request failed'));
++          }, 0);
++        };
  
 -      xhr.onabort = function() {
 -        setTimeout(function() {
 -          reject(new exports.DOMException('Aborted', 'AbortError'));
 -        }, 0);
 -      };
-+          const chunk = xhr.response.substring(responseTextOffset);
-+
-+          responseTextOffset = xhr.response.length;
++        xhr.onprogress = function() {
++          if (canceled || xhr.responseType !== 'text') {
++            return;
++          };
  
 -      function fixUrl(url) {
 -        try {
 -          return url === '' && global.location.href ? global.location.href : url
 -        } catch (e) {
 -          return url
-+          const buffer = encoder.encode(chunk, { stream: true });
-+
-+          readableStreamController.enqueue(buffer);
-         }
+-        }
 -      }
++          const chunk = xhr.response.substring(responseTextOffset);
  
 -      xhr.open(request.method, fixUrl(request.url), true);
-+        xhr.onreadystatechange = function() {
-+          if (xhr.readyState === xhr.DONE) {
-+            request.signal?.removeEventListener('abort', abort);
-+          }
++          responseTextOffset = xhr.response.length;
  
 -      if (request.credentials === 'include') {
 -        xhr.withCredentials = true;
 -      } else if (request.credentials === 'omit') {
 -        xhr.withCredentials = false;
 -      }
-+          if (xhr.readyState === xhr.HEADERS_RECEIVED) {
-+            var options = {
-+              status: xhr.status,
-+              statusText: xhr.statusText,
-+              headers: parseHeaders(xhr.getAllResponseHeaders() || '')
-+            };
-+            options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
++          const buffer = encoder.encode(chunk, { stream: true });
  
 -      if ('responseType' in xhr) {
 -        if (support.blob) {
@@ -1136,8 +1126,7 @@ index 6c7b313..ce62e84 100644
 -          request.headers.get('Content-Type').indexOf('application/octet-stream') !== -1
 -        ) {
 -          xhr.responseType = 'arraybuffer';
-+            resolve(new Response(readableStream, options));
-+          }
++          readableStreamController.enqueue(buffer);
          }
 -      }
  
@@ -1150,38 +1139,56 @@ index 6c7b313..ce62e84 100644
 -          xhr.setRequestHeader(name, value);
 -        });
 -      }
-+        function fixUrl(url) {
-+          try {
-+            return url === '' && global.location.href ? global.location.href : url
-+          } catch (e) {
-+            return url
++        xhr.onreadystatechange = function() {
++          if (xhr.readyState === xhr.DONE) {
++            request.signal?.removeEventListener('abort', abort);
 +          }
-+        }
  
 -      if (request.signal) {
 -        request.signal.addEventListener('abort', abortXhr);
-+        xhr.open(request.method, fixUrl(request.url), true);
++          if (xhr.readyState === xhr.HEADERS_RECEIVED) {
++            var options = {
++              status: xhr.status,
++              statusText: xhr.statusText,
++              headers: parseHeaders(xhr.getAllResponseHeaders() || '')
++            };
++            options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
++
++            setTimeout(function() {
++              resolve(new Response(readableStream, options));
++            }, 0);
++          }
++        }
  
 -        xhr.onreadystatechange = function() {
 -          // DONE (success or failure)
 -          if (xhr.readyState === 4) {
 -            request.signal.removeEventListener('abort', abortXhr);
--          }
++        function fixUrl(url) {
++          try {
++            return url === '' && global.location.href ? global.location.href : url
++          } catch (e) {
++            return url
+           }
 -        };
 -      }
-+        if (request.credentials === 'include') {
-+          xhr.withCredentials = true;
-+        } else if (request.credentials === 'omit') {
-+          xhr.withCredentials = false;
 +        }
  
 -      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
 -    })
 -  }
-+        xhr.responseType = 'arraybuffer';
-+        const contentTypeHeader = request.headers?.get('Content-Type');
++        xhr.open(request.method, fixUrl(request.url), true);
  
 -  fetch.polyfill = true;
++        if (request.credentials === 'include') {
++          xhr.withCredentials = true;
++        } else if (request.credentials === 'omit') {
++          xhr.withCredentials = false;
++        }
++
++        xhr.responseType = 'arraybuffer';
++        const contentTypeHeader = request.headers?.get('Content-Type');
++
 +        if (contentTypeHeader && contentTypeHeader.indexOf('application/octet-stream') !== -1) {
 +          xhr.responseType = 'text';
 +        }
