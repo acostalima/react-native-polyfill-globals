@@ -23,7 +23,7 @@
   "scripts": {
     "lint": "eslint --cache --ignore-path .gitignore *.js",
     "release": "standard-version",
-    "postrelease": "git push --follow-tags origin HEAD",
+    "postrelease": "git push --follow-tags origin HEAD && conventional-github-releaser -p angular",
     "test": "jest"
   },
   "devDependencies": {

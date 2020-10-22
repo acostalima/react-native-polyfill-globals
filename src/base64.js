@@ -1,6 +1,6 @@
 import { polyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
 
-export default () => {
+export const polyfill = () => {
     const { decode, encode } = require('base-64');
 
     polyfillGlobal('atob', () => decode);

@@ -1,5 +1,5 @@
 import { polyfillGlobal as mockPolyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
-import polyfillReadableStream from '../src/readable-stream';
+import { polyfill as polyfillReadableStream } from '../src/readable-stream';
 
 jest.mock('react-native/Libraries/Utilities/PolyfillFunctions', () => ({
     polyfillGlobal: jest.fn(),

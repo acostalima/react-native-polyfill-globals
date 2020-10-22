@@ -1,5 +1,5 @@
 import { polyfillGlobal as mockPolyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
-import polyfillURL from '../src/url';
+import { polyfill as polyfillURL } from '../src/url';
 
 jest.mock('react-native/Libraries/Utilities/PolyfillFunctions', () => ({
     polyfillGlobal: jest.fn(),

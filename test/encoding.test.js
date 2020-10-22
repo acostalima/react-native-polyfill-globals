@@ -1,5 +1,5 @@
 import { polyfillGlobal as mockPolyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
-import polyfillEncoding from '../src/encoding';
+import { polyfill as polyfillEncoding } from '../src/encoding';
 
 jest.mock('react-native/Libraries/Utilities/PolyfillFunctions', () => ({
     polyfillGlobal: jest.fn(),

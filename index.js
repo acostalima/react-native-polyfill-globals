@@ -4,5 +4,5 @@ export default () => {
         require('./src/encoding'),
         require('./src/readable-stream'),
         require('./src/url'),
-    ].forEach((polyfill) => polyfill());
+    ].forEach(({ polyfill }) => polyfill());
 };
