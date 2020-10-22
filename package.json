@@ -1,0 +1,57 @@
+{
+  "name": "react-native-polyfill-globals",
+  "version": "1.0.0",
+  "description": "Polyfills and patches missing or partially missing web and core APIs",
+  "main": "src/index.js",
+  "repository": "acostalima/react-native-polyfill-globals",
+  "author": {
+    "name": "André Costa Lima",
+    "email": "andreclima.pt@gmail.com",
+    "url": "https://andrecostalima.dev"
+  },
+  "license": "MIT",
+  "files": [
+    "src",
+    "index.js",
+    "patches"
+  ],
+  "keywords": [
+    "react-native",
+    "polyfill"
+  ],
+  "scripts": {
+    "lint": "eslint --cache --ignore-path .gitignore *.js",
+    "release": "standard-version",
+    "postrelease": "git push --follow-tags origin HEAD",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@moxy/babel-preset": "^3.3.1",
+    "@moxy/eslint-config-babel": "^12.3.0",
+    "@moxy/eslint-config-base": "^12.2.0",
+    "@moxy/eslint-config-jest": "^12.3.0",
+    "@moxy/eslint-config-react-native": "^13.0.3",
+    "@moxy/jest-config-base": "^5.0.0",
+    "@moxy/jest-config-react-native": "^5.0.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.3.0",
+    "jest": "^26.6.0",
+    "jest-extended": "^0.11.5",
+    "lint-staged": "^10.4.2",
+    "metro-react-native-babel-preset": "^0.63.0",
+    "patch-package": "^6.2.2",
+    "react-native": "^0.63.2",
+    "standard-version": "^9.0.0"
+  },
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "big-integer": "^1.6.48",
+    "formdata-polyfill": "^3.0.20",
+    "react-native-url-polyfill": "^1.2.0",
+    "text-encoding": "^0.7.0",
+    "web-streams-polyfill": "^3.0.0"
+  }
+}

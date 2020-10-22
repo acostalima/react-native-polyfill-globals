@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native-url-polyfill/js/URL.js b/node_modules/react-native-url-polyfill/js/URL.js
+index 7337f42..4389030 100644
+--- a/node_modules/react-native-url-polyfill/js/URL.js
++++ b/node_modules/react-native-url-polyfill/js/URL.js
+@@ -1,8 +1,6 @@
+ import {URL as whatwgUrl} from 'whatwg-url-without-unicode';
+ 
+-import {NativeModules} from 'react-native';
+-
+-const {NativeBlobModule} = NativeModules;
++import NativeBlobModule from 'react-native/Libraries/Blob/NativeBlobModule';
+ 
+ let BLOB_URL_PREFIX = null;
+ 
