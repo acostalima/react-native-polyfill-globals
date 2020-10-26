@@ -11,22 +11,22 @@
 There are several APIs which React Native does not provide. When available, they usally are not spec conformant. This package aims to fill that gap by providing polyfills and patches to said APIs.
 
 As of React Native v0.63.3:
-- `URL` and `URLSearchParams` are partially implemented
+- [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) are partially implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L56
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L115
     - https://github.com/facebook/react-native/pull/30188
     - https://github.com/facebook/react-native/pull/25719
     - https://github.com/facebook/react-native/issues/23922
     - https://github.com/facebook/react-native/issues/24428
-- `FormData` is partially implemented
+- [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) is partially implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/FormData.js
-- `FileReader.readAsArrayBuffer` is not implemented
+- [`FileReader.readAsArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) is not implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/FileReader.js#L84
-- `Response.body` is not implemented
+- [`Response.body`](https://developer.mozilla.org/en-US/docs/Web/API/Body/body) is not implemented
     - https://github.com/facebook/react-native/issues/12912
-- `ReadableStream` is not supported
-- `btoa` and `atob` are not supported
-- `TextEncoder` and `TextDecoder` are not supported
+- [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) is not supported
+- [`btoa`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) and [`atob`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob) are not supported
+- [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) are not supported
 
 ## Installation
 
@@ -48,7 +48,7 @@ polyfill();
 
 ### Polyfill all automatically
 
-Add the following import to your app's entry file, `index.js`, located at the root of your project.
+Add the following import to the top of your app's entry file, `index.js`, located at the root of your project.
 
 ```js
 import 'react-native-polyfill-globals/auto';
