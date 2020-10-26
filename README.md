@@ -6,6 +6,28 @@
 
 > Polyfills and patches missing or partially supported web and core APIs.
 
+## Motivation
+
+There are several APIs which React Native does not provide. When available, they usally are not spec conformant. This package aims to fill that gap by providing polyfills and patches to said APIs.
+
+As of React Native v0.63.3:
+- `URL` and `URLSearchParams` are partially implemented
+    - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L56
+    - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L115
+    - https://github.com/facebook/react-native/pull/30188
+    - https://github.com/facebook/react-native/pull/25719
+    - https://github.com/facebook/react-native/issues/23922
+    - https://github.com/facebook/react-native/issues/24428
+- `FormData` is partially implemented
+    - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/FormData.js
+- `FileReader.readAsArrayBuffer` is not implemented
+    - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/FileReader.js#L84
+- `Response.body` is not implemented
+    - https://github.com/facebook/react-native/issues/12912
+- `ReadableStream` is not supported
+- `btoa` and `atob` are not supported
+- `TextEncoder` and `TextDecoder` are not supported
+
 ## Installation
 
 ```sh
@@ -79,7 +101,7 @@ $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.pa
 
 ### About streaming
 
-As React Native does not support returning a `ReadableStream` natively nor provide access to the underlying byte stream (only base64 can be read through the bridge), we have to fallback to `XMLHttpRequest` without support for true streaming. React Native's XHR provides [progress events](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event) which buffers text and allows us to concatenate a response by encoding it into its UTF-8 byte representation using the `TextEncoder` API. Although [very inefficient](https://github.com/jonnyreeves/fetch-readablestream/blob/cabccb98788a0141b001e6e775fc7fce87c62081/src/defaultTransportFactory.js#L33), it's some of sort of pseudo-streaming that works. Read more at https://github.com/github/fetch/issues/746#issuecomment-573251497.
+As React Native does not support returning a `ReadableStream` natively nor provide access to the underlying byte stream (only base64 can be read through the bridge), we have to fallback to `XMLHttpRequest` without support for true streaming. React Native's XHR provides [progress events](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event) which buffers text and allows us to concatenate a response by encoding it into its UTF-8 byte representation using the `TextEncoder` API. Although [very inefficient](https://github.com/jonnyreeves/fetch-readablestream/blob/cabccb98788a0141b001e6e775fc7fce87c62081/src/defaultTransportFactory.js#L33), it's some of sort of pseudo-streaming that works. Read more at https://github.com/github/fetch/issues/746#issuecomment-573251497 and https://hpbn.co/xmlhttprequest/#streaming-data-with-xhr.
 
 To make `Response.body` work, `ReadableStream`'s controller was integrated with XHR's progress events. It's important to stress that progress events only work when [`XMLHttpRequest.responseType`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) is set to `text`. If you wish to process raw binary data, either `blob` or `arraybuffer` has to be used. In this case, the response is read as a whole, when the load event is fired, and enqueued to the stream's controller as single chunk.
 
