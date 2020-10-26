@@ -66,7 +66,7 @@ import { polyfill as polyfillURL } 'react-native-polyfill-globals/src/url';
 
 ### Apply patches
 
-Patch files provided at the [patches](patches) directory install additional polyfills.
+Patch files located at the [patches](patches) directory install additional polyfills.
 
 Apply all at once with `patch-package`:
 
