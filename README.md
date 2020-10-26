@@ -22,9 +22,8 @@ As of React Native v0.63.3:
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/FormData.js
 - [`FileReader.readAsArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) is not implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/FileReader.js#L84
-- [`Response.body`](https://developer.mozilla.org/en-US/docs/Web/API/Body/body) is not implemented
+- [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) is not supported and, by extension, [`Response.body`](https://developer.mozilla.org/en-US/docs/Web/API/Body/body) is not implemented
     - https://github.com/facebook/react-native/issues/12912
-- [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) is not supported
 - [`btoa`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) and [`atob`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob) are not supported
 - [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) are not supported
 
