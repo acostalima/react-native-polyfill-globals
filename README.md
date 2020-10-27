@@ -18,6 +18,7 @@ As of React Native v0.63.3:
     - https://github.com/facebook/react-native/pull/25719
     - https://github.com/facebook/react-native/issues/23922
     - https://github.com/facebook/react-native/issues/24428
+    - https://github.com/facebook/react-native/issues/16434
 - [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) is partially implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/FormData.js
 - [`FileReader.readAsArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) is not implemented
