@@ -27,6 +27,7 @@ As of React Native v0.63.3:
 - [`FileReader.readAsArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) is not implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/FileReader.js#L84
 - [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) is not supported and, by extension, [`Response.body`](https://developer.mozilla.org/en-US/docs/Web/API/Body/body) is not implemented. Related discussions:
+    - https://github.com/facebook/react-native/issues/27741
     - https://github.com/facebook/react-native/issues/12912
     - https://github.com/github/fetch/issues/198
     - https://github.com/github/fetch/issues/746
