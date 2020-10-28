@@ -11,16 +11,17 @@
 There are several APIs which React Native does not support. When available, they usally are not spec-conformant. This package aims to fill that gap by providing polyfills and patches to said APIs.
 
 As of React Native v0.63.3:
-- [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) are partially implemented. Related discussions:
+- [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) are partially implemented.
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L56
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L115
-    - https://github.com/facebook/react-native/pull/30188
-    - https://github.com/facebook/react-native/pull/25719
-    - https://github.com/facebook/react-native/issues/23922
-    - https://github.com/facebook/react-native/issues/24428
-    - https://github.com/facebook/react-native/issues/16434
-    - https://github.com/facebook/react-native/issues/25717
-    - https://github.com/facebook/react-native/issues/26019
+    - Related discussions:
+        - https://github.com/facebook/react-native/pull/30188
+        - https://github.com/facebook/react-native/pull/25719
+        - https://github.com/facebook/react-native/issues/23922
+        - https://github.com/facebook/react-native/issues/24428
+        - https://github.com/facebook/react-native/issues/16434
+        - https://github.com/facebook/react-native/issues/25717
+        - https://github.com/facebook/react-native/issues/26019
 - [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) is partially implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/FormData.js
 - [`FileReader.readAsArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) is not implemented
