@@ -116,6 +116,11 @@ Currently, on each request, if the `Content-Type` header is set `application/oct
 
 Note that Metro, React Native's bundler, at this time [does not support](https://github.com/facebook/metro/issues/227) tree-shaking nor dead code elimination. As such, beware if you are applying polyfills selectively with the JavaScript API and don't call the functions, the code will be included in the production bundle regardless. If you don't need a given polyfill, do not import it at all.
 
+## Related
+
+- [node-libs-react-native](https://github.com/parshap/node-libs-react-native) - Node.js core modules for React Native.
+- [rn-nodeify](https://github.com/tradle/rn-nodeify) - Hack to allow React Native projects to use Node core modules and npm modules that use them.
+
 ## License
 
 Released under the [MIT License](https://www.opensource.org/licenses/mit-license.php).
