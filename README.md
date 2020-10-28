@@ -8,10 +8,10 @@
 
 ## Motivation
 
-There are several APIs which React Native does not provide. When available, they usally are not spec conformant. This package aims to fill that gap by providing polyfills and patches to said APIs.
+There are several APIs which React Native does not support. When available, they usally are not spec-conformant. This package aims to fill that gap by providing polyfills and patches to said APIs.
 
 As of React Native v0.63.3:
-- [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) are partially implemented
+- [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) are partially implemented. Related discussions:
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L56
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L115
     - https://github.com/facebook/react-native/pull/30188
@@ -25,7 +25,7 @@ As of React Native v0.63.3:
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/FormData.js
 - [`FileReader.readAsArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) is not implemented
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/FileReader.js#L84
-- [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) is not supported and, by extension, [`Response.body`](https://developer.mozilla.org/en-US/docs/Web/API/Body/body) is not implemented
+- [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) is not supported and, by extension, [`Response.body`](https://developer.mozilla.org/en-US/docs/Web/API/Body/body) is not implemented. Related discussions:
     - https://github.com/facebook/react-native/issues/12912
     - https://github.com/github/fetch/issues/198
     - https://github.com/github/fetch/issues/746
@@ -105,9 +105,9 @@ $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.pa
 
 ### About streaming
 
-As React Native does not provide access to the underlying byte stream (only strings can be passed through the bridge and thus binary data has to be base64-encoded), we have to fallback to [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) or React Native's Networking API for [iOS](https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.ios.js) and [Android](https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.android.js). React Native's XHR provides [progress events](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event) to send incremental data which buffers text as it is received, allows us to concatenate response string and then encode it into its UTF-8 byte representation using the [TextEncoder](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) API. Although [very inefficient](https://github.com/jonnyreeves/fetch-readablestream/blob/cabccb98788a0141b001e6e775fc7fce87c62081/src/defaultTransportFactory.js#L33), it's some of sort of pseudo-streaming that works. Read more at https://github.com/github/fetch/issues/746#issuecomment-573251497 and https://hpbn.co/xmlhttprequest/#streaming-data-with-xhr about limitations and gotchas.
+As React Native does not provide access to the underlying native byte stream, we have to fallback to [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) or React Native's Networking API for [iOS](https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.ios.js) and [Android](https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.android.js). Only strings can be passed through the bridge, thus binary data has to be base64-encoded ([source](https://github.com/react-native-community/discussions-and-proposals/issues/107)). React Native's XHR provides [progress events](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event) to send incremental data which buffers text as it is received, allows us to concatenate response string and then encode it into its UTF-8 byte representation using the [TextEncoder](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) API. Although [very inefficient](https://github.com/jonnyreeves/fetch-readablestream/blob/cabccb98788a0141b001e6e775fc7fce87c62081/src/defaultTransportFactory.js#L33), it's some of sort of pseudo-streaming that works. Read more at https://github.com/github/fetch/issues/746#issuecomment-573251497 and https://hpbn.co/xmlhttprequest/#streaming-data-with-xhr about limitations and gotchas.
 
-To make `Response.body` work, `ReadableStream`'s controller was integrated with XHR's progress events. It's important to stress that progress events are only dispatched when [`XMLHttpRequest.responseType`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) is set to `text` (https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.mm#L544-L547), therefore limiting streaming to text-only transfers. If you wish to process binary data, either `blob` or `arraybuffer` has to be used. In this case, the downside is that the response is read as a whole, when the load event is fired, and enqueued to the stream's controller as a single chunk. There is no way to read partial response of a binary transfer.
+To make `Response.body` work, `ReadableStream`'s controller was integrated with XHR's progress events. It's important to stress that progress events are only dispatched when [`XMLHttpRequest.responseType`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) is set to `text` (https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.mm#L544-L547), therefore limiting streaming to text-only transfers. If you wish to process binary data, either `blob` or `arraybuffer` has to be used. In this case, the downside is that the final response body is read as a whole, when the load event is fired, and enqueued to the stream's controller as a single chunk. There is no way to read partial response of a binary transfer.
 
 Currently, on each request, if the `Content-Type` header is set `application/octet-stream` then `XMLHttpRequest.responseType` is set to `text`. Otherwise, it is set to `arraybuffer`.
 
