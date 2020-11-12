@@ -1,11 +1,19 @@
 diff --git a/node_modules/react-native/Libraries/Blob/FileReader.js b/node_modules/react-native/Libraries/Blob/FileReader.js
-index 15a8b44..e22385c 100644
+index 15a8b44..5a47924 100644
 --- a/node_modules/react-native/Libraries/Blob/FileReader.js
 +++ b/node_modules/react-native/Libraries/Blob/FileReader.js
-@@ -81,8 +81,41 @@ class FileReader extends (EventTarget(...READER_EVENTS): any) {
+@@ -12,6 +12,7 @@
+ 
+ const Blob = require('./Blob');
+ const EventTarget = require('event-target-shim');
++const { toByteArray } = require('base64-js');
+ 
+ import NativeFileReaderModule from './NativeFileReaderModule';
+ 
+@@ -81,8 +82,35 @@ class FileReader extends (EventTarget(...READER_EVENTS): any) {
      }
    }
-
+ 
 -  readAsArrayBuffer() {
 -    throw new Error('FileReader.readAsArrayBuffer is not implemented');
 +  readAsArrayBuffer(blob: ?Blob) {
@@ -24,15 +32,9 @@ index 15a8b44..e22385c 100644
 +        }
 +
 +        const base64 = text.split(',')[1];
-+        const bytes = atob(base64);
-+        const buffer = new ArrayBuffer(bytes.length);
-+        const view = new Uint8Array(buffer);
++        const typedArray = toByteArray(base64);
 +
-+        for (let i = 0; i < bytes.length; i++) {
-+          view[i] = bytes.charCodeAt(i);
-+        }
-+
-+        this._result = view.buffer;
++        this._result = typedArray.buffer;
 +        this._setReadyState(DONE);
 +      },
 +      error => {
@@ -44,7 +46,7 @@ index 15a8b44..e22385c 100644
 +      },
 +    );
    }
-
+ 
    readAsDataURL(blob: ?Blob) {
 diff --git a/node_modules/react-native/Libraries/Network/FormData.js b/node_modules/react-native/Libraries/Network/FormData.js
 index bdb1da3..2ef68aa 100644
@@ -52,11 +54,11 @@ index bdb1da3..2ef68aa 100644
 +++ b/node_modules/react-native/Libraries/Network/FormData.js
 @@ -11,7 +11,7 @@
  'use strict';
-
+ 
  type FormDataValue = any;
 -type FormDataNameValuePair = [string, FormDataValue];
 +type FormDataPartInternal = [string, FormDataValue, string];
-
+ 
  type Headers = {[name: string]: string, ...};
  type FormDataPart =
 @@ -49,25 +49,46 @@ type FormDataPart =
@@ -65,11 +67,11 @@ index bdb1da3..2ef68aa 100644
  class FormData {
 -  _parts: Array<FormDataNameValuePair>;
 +  _parts: Array<FormDataPartInternal>;
-
+ 
    constructor() {
      this._parts = [];
    }
-
+ 
 -  append(key: string, value: FormDataValue) {
 +  append(key: string, value: FormDataValue, fileName: string) {
      // The XMLHttpRequest spec doesn't specify if duplicate keys are allowed.
@@ -102,14 +104,14 @@ index bdb1da3..2ef68aa 100644
 +
 +    this._parts = newParts;
    }
-
+ 
    getParts(): Array<FormDataPart> {
 -    return this._parts.map(([name, value]) => {
 +    return this._parts.map(([name, value, fileName]) => {
        const contentDisposition = 'form-data; name="' + name + '"';
 -
        const headers: Headers = {'content-disposition': contentDisposition};
-
+ 
        // The body part is a "blob", which in React Native just means
 @@ -75,13 +96,24 @@ class FormData {
        // have a `name` and `type` attribute to specify filename and
