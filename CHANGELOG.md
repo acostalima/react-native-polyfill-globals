@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/acostalima/react-native-polyfill-globals/compare/v1.0.7...v2.0.0) (2021-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* add @react-native-community/fetch, update docs, add polyfills as peer deps
+
+### Features
+
+* add @react-native-community/fetch, update docs, add polyfills as peer deps ([644fd6d](https://github.com/acostalima/react-native-polyfill-globals/commit/644fd6dcfafab5a1e8d000c702e26844827be7b3))
+
 ### [1.0.7](https://github.com/acostalima/react-native-polyfill-globals/compare/v1.0.6...v1.0.7) (2020-11-12)
 
 
