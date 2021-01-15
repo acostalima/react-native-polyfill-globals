@@ -42,6 +42,16 @@ As of React Native v0.63.3:
 $ npm install react-native-polyfill-globals
 ```
 
+### Peer dependencies
+
+- [react-native-url-polyfill](https://github.com/charpeni/react-native-url-polyfill)
+- [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
+- [base-64](https://github.com/mathiasbynens/base64)
+- [text-encoding](https://github.com/inexorabletash/text-encoding)
+- [@react-native-community/fetch](https://github.com/react-native-community/fetch)
+
+Install the above as necessary.
+
 ## Usage
 
 ### Polyfill all on demand
@@ -69,6 +79,7 @@ import { polyfill as polyfillBase64 } 'react-native-polyfill-globals/src/base64'
 import { polyfill as polyfillEncoding } 'react-native-polyfill-globals/src/encoding';
 import { polyfill as polyfillReadableStream } 'react-native-polyfill-globals/src/readable-stream';
 import { polyfill as polyfillURL } 'react-native-polyfill-globals/src/url';
+import { polyfill as polyfillFetch } 'react-native-polyfill-globals/src/fetch';
 ```
 
 ### Apply patches
@@ -93,7 +104,6 @@ Apply invidually with `patch`:
 ```sh
 $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.patch
 ```
-
 ## Included support
 
 - Implemented by react-native+0.63.3.patch
@@ -106,14 +116,7 @@ $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.pa
 - `ReadableStream` from [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
 - `btoa` and `atob` from [base-64](https://github.com/mathiasbynens/base64)
 - `TextEncoder` and `TextDecoder` from [text-encoding](https://github.com/inexorabletash/text-encoding)
-
-### About streaming
-
-As React Native does not provide access to the underlying native byte stream, we have to fallback to [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) or React Native's Networking API for [iOS](https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.ios.js) and [Android](https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.android.js). Only strings can be passed through the bridge, thus binary data has to be base64-encoded ([source](https://github.com/react-native-community/discussions-and-proposals/issues/107)). React Native's XHR provides [progress events](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event) to send incremental data which buffers text as it is received, allows us to concatenate response string and then encode it into its UTF-8 byte representation using the [TextEncoder](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) API. Although [very inefficient](https://github.com/jonnyreeves/fetch-readablestream/blob/cabccb98788a0141b001e6e775fc7fce87c62081/src/defaultTransportFactory.js#L33), it's some of sort of pseudo-streaming that works. Read more at https://github.com/github/fetch/issues/746#issuecomment-573251497 and https://hpbn.co/xmlhttprequest/#streaming-data-with-xhr about limitations and gotchas.
-
-To make `Response.body` work, `ReadableStream`'s controller was integrated with XHR's progress events. It's important to stress that progress events are only dispatched when [`XMLHttpRequest.responseType`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) is set to `text` (https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Network/RCTNetworking.mm#L544-L547), therefore limiting streaming to text-only transfers. If you wish to process binary data, either `blob` or `arraybuffer` has to be used. In this case, the downside is that the final response body is read as a whole, when the load event is fired, and enqueued to the stream's controller as a single chunk. There is no way to read partial response of a binary transfer.
-
-Currently, on each request, if the `Content-Type` header is set `application/octet-stream` then `XMLHttpRequest.responseType` is set to `text`. Otherwise, it is set to `arraybuffer`.
+- `fetch` for text streaming from [@react-native-community/fetch](https://github.com/react-native-community/fetch)
 
 ## ⚠️ Bundling
 

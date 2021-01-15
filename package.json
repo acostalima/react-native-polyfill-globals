@@ -21,7 +21,8 @@
     "polyfill"
   ],
   "scripts": {
-    "lint": "eslint --cache --ignore-path .gitignore *.js",
+    "lint": "eslint --cache --ignore-path .gitignore .",
+    "prerelease": "npm run lint && npm run test",
     "release": "standard-version",
     "postrelease": "git push --follow-tags origin HEAD && conventional-github-releaser -p angular",
     "test": "jest"
@@ -48,13 +49,11 @@
     "react-native": "^0.63.2",
     "standard-version": "^9.0.0"
   },
-  "dependencies": {
-    "base-64": "^1.0.0",
-    "react-native-url-polyfill": "^1.2.0",
-    "text-encoding": "^0.7.0",
-    "web-streams-polyfill": "^3.0.1"
-  },
   "peerDependencies": {
-    "react-native": "*"
+    "base-64": "*",
+    "react-native-url-polyfill": "*",
+    "text-encoding": "*",
+    "web-streams-polyfill": "*",
+    "@react-native-community/fetch": "*"
   }
 }

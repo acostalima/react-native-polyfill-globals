@@ -1,31 +1,29 @@
 import { polyfillGlobal as mockPolyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
 import { polyfill as polyfillEncoding } from '../src/encoding';
 
-jest.mock('react-native/Libraries/Utilities/PolyfillFunctions', () => ({
-    polyfillGlobal: jest.fn(),
-}));
+jest.mock('text-encoding', () => ({
+    TextEncoder: () => 'TextEncoder',
+    TextDecoder: () => 'TextDecoder',
+}), { virtual: true });
+
+const POLYFILL_NAMES = ['TextEncoder', 'TextDecoder'];
 
 test('polyfill TextEncoder and TextDecoder', () => {
-    const ASSERT_API = {
-        TextEncoder: (TextEncoder) => {
-            expect(TextEncoder.prototype.encode).toBeInstanceOf(Function);
-        },
-        TextDecoder: (TextDecoder) => {
-            expect(TextDecoder.prototype.decode).toBeInstanceOf(Function);
-        },
-    };
-
     polyfillEncoding(mockPolyfillGlobal);
 
     expect(mockPolyfillGlobal).toHaveBeenCalledTimes(2);
 
     mockPolyfillGlobal.mock.calls.forEach((call) => {
         const name = call[0];
-        const API = call[1]?.();
+        const getImplementation = call[1]?.();
 
-        expect(name).toBeOneOf(['TextEncoder', 'TextDecoder']);
-        expect(API).toBeDefined();
-        ASSERT_API[name](API);
+        expect(getImplementation).toBeInstanceOf(Function);
+        expect(name).toBeOneOf(POLYFILL_NAMES);
+        expect(getImplementation()).toBe(name);
+
+        POLYFILL_NAMES.shift();
     });
+
+    expect(POLYFILL_NAMES).toHaveLength(0);
 });
 

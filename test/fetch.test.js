@@ -1,17 +1,19 @@
 import { polyfillGlobal as mockPolyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
-import { polyfill as polyfillBase64 } from '../src/base64';
+import { polyfill as polyfillFetch } from '../src/fetch';
 
-jest.mock('base-64', () => ({
-    encode: () => 'btoa',
-    decode: () => 'atob',
+jest.mock('@react-native-community/fetch', () => ({
+    fetch: () => 'fetch',
+    Headers: () => 'Headers',
+    Request: () => 'Request',
+    Response: () => 'Response',
 }), { virtual: true });
 
-const POLYFILL_NAMES = ['atob', 'btoa'];
+const POLYFILL_NAMES = ['fetch', 'Headers', 'Request', 'Response'];
 
-test('polyfill atob and btoa', () => {
-    polyfillBase64();
+test('polyfill fetch', () => {
+    polyfillFetch(mockPolyfillGlobal);
 
-    expect(mockPolyfillGlobal).toHaveBeenCalledTimes(2);
+    expect(mockPolyfillGlobal).toHaveBeenCalledTimes(4);
 
     mockPolyfillGlobal.mock.calls.forEach((call) => {
         const name = call[0];
