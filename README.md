@@ -110,8 +110,6 @@ $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.pa
     - `FormData.set` 
     - `FormData` handles `Blob`s correctly
     - `FileReader.readAsArrayBuffer`
-- Implemented by whatwg-fetch+3.4.1.patch
-    - `Response.body`
 - `URL` and `URLSearchParams` from [react-native-url-polyfill](https://github.com/charpeni/react-native-url-polyfill)
 - `ReadableStream` from [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
 - `btoa` and `atob` from [base-64](https://github.com/mathiasbynens/base64)
