@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/acostalima/react-native-polyfill-globals/compare/v2.0.0...v3.0.0) (2021-01-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* update fetch package name
+
+### Bug Fixes
+
+* update fetch package name ([f0daf44](https://github.com/acostalima/react-native-polyfill-globals/commit/f0daf445ba6fd5ed352bb1f25636d005cfb06c16))
+
 ## [2.0.0](https://github.com/acostalima/react-native-polyfill-globals/compare/v1.0.7...v2.0.0) (2021-01-15)
 
 
