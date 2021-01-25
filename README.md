@@ -75,11 +75,11 @@ import 'react-native-polyfill-globals/auto';
 ### Polyfill selectively on demand
 
 ```js
-import { polyfill as polyfillBase64 } 'react-native-polyfill-globals/src/base64';
-import { polyfill as polyfillEncoding } 'react-native-polyfill-globals/src/encoding';
-import { polyfill as polyfillReadableStream } 'react-native-polyfill-globals/src/readable-stream';
-import { polyfill as polyfillURL } 'react-native-polyfill-globals/src/url';
-import { polyfill as polyfillFetch } 'react-native-polyfill-globals/src/fetch';
+import { polyfill as polyfillBase64 } from 'react-native-polyfill-globals/src/base64';
+import { polyfill as polyfillEncoding } from 'react-native-polyfill-globals/src/encoding';
+import { polyfill as polyfillReadableStream } from 'react-native-polyfill-globals/src/readable-stream';
+import { polyfill as polyfillURL } from 'react-native-polyfill-globals/src/url';
+import { polyfill as polyfillFetch } from 'react-native-polyfill-globals/src/fetch';
 ```
 
 ### Apply patches
