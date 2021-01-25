@@ -48,7 +48,7 @@ $ npm install react-native-polyfill-globals
 - [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
 - [base-64](https://github.com/mathiasbynens/base64)
 - [text-encoding](https://github.com/inexorabletash/text-encoding)
-- [@react-native-community/fetch](https://github.com/react-native-community/fetch)
+- [react-native-fetch-api](https://github.com/react-native-community/fetch)
 
 Install the above as necessary.
 
@@ -114,7 +114,7 @@ $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.pa
 - `ReadableStream` from [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
 - `btoa` and `atob` from [base-64](https://github.com/mathiasbynens/base64)
 - `TextEncoder` and `TextDecoder` from [text-encoding](https://github.com/inexorabletash/text-encoding)
-- `fetch` for text streaming from [@react-native-community/fetch](https://github.com/react-native-community/fetch)
+- `fetch` for text streaming from [react-native-fetch-api](https://github.com/react-native-community/fetch)
 
 ## ⚠️ Bundling
 

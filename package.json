@@ -54,6 +54,6 @@
     "react-native-url-polyfill": "*",
     "text-encoding": "*",
     "web-streams-polyfill": "*",
-    "@react-native-community/fetch": "*"
+    "react-native-fetch-api": "*"
   }
 }

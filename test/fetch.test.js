@@ -1,7 +1,7 @@
 import { polyfillGlobal as mockPolyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
 import { polyfill as polyfillFetch } from '../src/fetch';
 
-jest.mock('@react-native-community/fetch', () => ({
+jest.mock('react-native-fetch-api', () => ({
     fetch: () => 'fetch',
     Headers: () => 'Headers',
     Request: () => 'Request',
