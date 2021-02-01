@@ -5,5 +5,6 @@ export default () => {
         require('./src/readable-stream'),
         require('./src/url'),
         require('./src/fetch'),
+        require('./src/crypto'),
     ].forEach(({ polyfill }) => polyfill());
 };

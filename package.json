@@ -54,6 +54,7 @@
     "react-native-url-polyfill": "*",
     "text-encoding": "*",
     "web-streams-polyfill": "*",
-    "react-native-fetch-api": "*"
+    "react-native-fetch-api": "*",
+    "react-native-get-random-values": "*"
   }
 }

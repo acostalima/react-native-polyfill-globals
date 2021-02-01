@@ -11,6 +11,7 @@
 There are several APIs which React Native does not support. When available, they usally are not spec-conformant. This package aims to fill that gap by providing polyfills and patches to said APIs.
 
 As of React Native v0.63.3:
+
 - [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) are partially implemented.
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L56
     - https://github.com/facebook/react-native/blob/v0.63.3/Libraries/Blob/URL.js#L115
@@ -35,7 +36,7 @@ As of React Native v0.63.3:
     - https://github.com/github/fetch/issues/746
 - [`btoa`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) and [`atob`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob) are not supported
 - [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) are not supported
-
+- ...and others
 ## Installation
 
 ```sh
@@ -49,8 +50,22 @@ $ npm install react-native-polyfill-globals
 - [base-64](https://github.com/mathiasbynens/base64)
 - [text-encoding](https://github.com/inexorabletash/text-encoding)
 - [react-native-fetch-api](https://github.com/react-native-community/fetch)
+- [react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values)
 
 Install the above as necessary.
+
+## Included support
+
+- Implemented by react-native+0.63.3.patch
+    - `FormData.set` 
+    - `FormData` handles `Blob`s correctly
+    - `FileReader.readAsArrayBuffer`
+- `URL` and `URLSearchParams` provided by [react-native-url-polyfill](https://github.com/charpeni/react-native-url-polyfill)
+- `ReadableStream` provided by [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
+- `btoa` and `atob` provided by [base-64](https://github.com/mathiasbynens/base64)
+- `TextEncoder` and `TextDecoder` provided by [text-encoding](https://github.com/inexorabletash/text-encoding)
+- `fetch` for text streaming provided by [react-native-fetch-api](https://github.com/react-native-community/fetch)
+- `crypto.getRandomValues` provided by [react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values)
 
 ## Usage
 
@@ -80,6 +95,7 @@ import { polyfill as polyfillEncoding } from 'react-native-polyfill-globals/src/
 import { polyfill as polyfillReadableStream } from 'react-native-polyfill-globals/src/readable-stream';
 import { polyfill as polyfillURL } from 'react-native-polyfill-globals/src/url';
 import { polyfill as polyfillFetch } from 'react-native-polyfill-globals/src/fetch';
+import { polyfill as polyfillCrypto } from 'react-native-polyfill-globals/src/crypto';
 ```
 
 ### Apply patches
@@ -104,17 +120,6 @@ Apply invidually with `patch`:
 ```sh
 $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.patch
 ```
-## Included support
-
-- Implemented by react-native+0.63.3.patch
-    - `FormData.set` 
-    - `FormData` handles `Blob`s correctly
-    - `FileReader.readAsArrayBuffer`
-- `URL` and `URLSearchParams` from [react-native-url-polyfill](https://github.com/charpeni/react-native-url-polyfill)
-- `ReadableStream` from [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
-- `btoa` and `atob` from [base-64](https://github.com/mathiasbynens/base64)
-- `TextEncoder` and `TextDecoder` from [text-encoding](https://github.com/inexorabletash/text-encoding)
-- `fetch` for text streaming from [react-native-fetch-api](https://github.com/react-native-community/fetch)
 
 ## ⚠️ Bundling
 
