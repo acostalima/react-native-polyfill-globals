@@ -18,7 +18,10 @@
   ],
   "keywords": [
     "react-native",
-    "polyfill"
+    "polyfill",
+    "polyfills",
+    "patch",
+    "patches"
   ],
   "scripts": {
     "lint": "eslint --cache --ignore-path .gitignore .",

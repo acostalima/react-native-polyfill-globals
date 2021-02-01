@@ -56,9 +56,9 @@ Install the above as necessary.
 
 ## Included support
 
-- Implemented by react-native+0.63.3.patch
+- Implemented by [react-native+0.63.3.patch](patches/react-native+0.63.3.patch)
     - `FormData.set` 
-    - `FormData` handles `Blob`s correctly
+    - Handling of `Blob`s by `FormData`
     - `FileReader.readAsArrayBuffer`
 - `URL` and `URLSearchParams` provided by [react-native-url-polyfill](https://github.com/charpeni/react-native-url-polyfill)
 - `ReadableStream` provided by [web-streams-polyfill](https://github.com/MattiasBuelens/web-streams-polyfill)
@@ -87,7 +87,7 @@ Add the following import to the top of your app's entry file, `index.js`, locate
 import 'react-native-polyfill-globals/auto';
 ```
 
-### Polyfill selectively on demand
+### Polyfill selectively
 
 ```js
 import { polyfill as polyfillBase64 } from 'react-native-polyfill-globals/src/base64';
@@ -100,7 +100,7 @@ import { polyfill as polyfillCrypto } from 'react-native-polyfill-globals/src/cr
 
 ### Apply patches
 
-Patch files located at the [patches](patches) directory install additional polyfills.
+Patch files located at the [patches](patches) directory provide additional polyfills and fixes.
 
 Apply all at once with `patch-package`:
 
@@ -123,13 +123,14 @@ $ patch -p1 -i node_modules/react-native-polyfill-globals/react-native+0.63.3.pa
 
 ## ⚠️ Bundling
 
-Note that Metro, React Native's bundler, at this time [does not support](https://github.com/facebook/metro/issues/227) tree-shaking nor dead code elimination. As such, beware if you are applying polyfills selectively with the JavaScript API and don't call the functions, the code will be included in the production bundle regardless. If you don't need a given polyfill, do not import it at all.
+Note that Metro, React Native's bundler, at this time [does not support](https://github.com/facebook/metro/issues/227) tree-shaking nor dead code elimination. As such, beware that even if you apply polyfills selectively and don't use them at runtime, the code will be included in the production bundle regardless. If you don't need a given polyfill, do not import it at all.
 
 ## Related
 
 - [node-libs-react-native](https://github.com/parshap/node-libs-react-native) - Node.js core modules for React Native.
 - [rn-nodeify](https://github.com/tradle/rn-nodeify) - Hack to allow React Native projects to use Node core modules and npm modules that use them.
+- [ReactNativify](https://github.com/philikon/ReactNativify) - A saner approach on how to use Node.js libraries in React Native.
 
 ## License
 
-Released under the [MIT License](https://www.opensource.org/licenses/mit-license.php).
+MIT © [André Costa Lima](https://github.com/acostalima)
