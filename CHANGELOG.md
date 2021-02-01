@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/acostalima/react-native-polyfill-globals/compare/v3.0.0...v3.1.0) (2021-02-01)
+
+
+### Features
+
+* add polyfill for crypto.getRandomValues ([3890804](https://github.com/acostalima/react-native-polyfill-globals/commit/3890804fbf638bb213c9898187a2ebdcea6c60ad))
+
 ## [3.0.0](https://github.com/acostalima/react-native-polyfill-globals/compare/v2.0.0...v3.0.0) (2021-01-25)
 
 
