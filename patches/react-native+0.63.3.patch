@@ -104,7 +104,11 @@ index bdb1da3..2ef68aa 100644
 +
 +    this._parts = newParts;
    }
- 
+
++  getAll(): Array<FormDataPart> {
++    return this.getParts();
++  }
+
    getParts(): Array<FormDataPart> {
 -    return this._parts.map(([name, value]) => {
 +    return this._parts.map(([name, value, fileName]) => {
