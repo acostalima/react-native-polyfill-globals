@@ -56,7 +56,7 @@
     "base-64": "*",
     "react-native-url-polyfill": "*",
     "text-encoding": "*",
-    "web-streams-polyfill": "*",
+    "web-streams-polyfill": "<4",
     "react-native-fetch-api": "*",
     "react-native-get-random-values": "*"
   }
